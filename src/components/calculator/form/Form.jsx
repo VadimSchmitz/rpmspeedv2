@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import FormInput from "./FormInput";
 import Button from "../../../utils/Button";
-import DisabledButton from "../../../utils/disabledNutton";
+import DisabledButton from "../../../utils/disabledButton";
+import buildRpmMatrix from "../calculations/buildRpmMatrix";
 
 export default function Form() {
   const [values, setValues] = useState({
@@ -22,10 +23,11 @@ export default function Form() {
     { gear: 0.823 },
   ]);
 
+  const rpmMatrix = [];
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("here is your data");
-    console.log(values, gearFormFields);
+    buildRpmMatrix(values.maxRpm, rpmMatrix);
   };
 
   const onChange = (e) => {
