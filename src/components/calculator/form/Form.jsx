@@ -67,11 +67,10 @@ export default function Form() {
   }, [values.frontSprocket, values.rearSprocket]);
 
   return (
-    <form
-      className="w-9/12 justify-center bg-green-100"
-      onSubmit={handleSubmit}
-    >
-      <h1 className="text-xl font-bold">Calculate your bikes top speed</h1>
+    <form className="justify-center" onSubmit={handleSubmit}>
+      <h1 className="text-2xl font-bold mt-3 mb-2">
+        Calculate your bikes top speed
+      </h1>
       <div className="sm:flex sm:max-w-[400px] sm:space-x-1">
         <FormInput
           id={1}
@@ -83,7 +82,7 @@ export default function Form() {
         <FormInput
           id={2}
           name={"maxRpm"}
-          label={"maxRpm"}
+          label={"Max rpm"}
           defaultValue={values.maxRpm}
           onChange={onChange}
         />
@@ -96,7 +95,7 @@ export default function Form() {
         />
       </div>
       {/* {values.finalGearRatio} */}
-      <div className="flex space-x-1 max-w-4xl">
+      <div className="flex space-x-1 max-w-4xl mr-1">
         <div className="max-h-8 mt-[19px]">
           {gearFormFields.length - 1 && gearFormFields.length > 1 ? (
             <Button
@@ -117,7 +116,7 @@ export default function Form() {
         {gearFormFields.map((form, index) => {
           return (
             <div key={index}>
-              <p className="text-sm pl-[2px]">gear {index + 1}</p>
+              <p className="text-sm pl-[2px]">Gear {index + 1}</p>
               <div className="flex">
                 <FormInput
                   name={"gear"}
