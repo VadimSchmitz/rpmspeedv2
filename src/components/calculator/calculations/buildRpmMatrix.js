@@ -4,7 +4,6 @@ const buildRpmMatrix = (maxRpm, rpmMatrix) => {
     tempMatrix.push(i);
   }
   rpmMatrix = tempMatrix;
-  console.log(rpmMatrix.reverse());
   return rpmMatrix.reverse();
 };
 

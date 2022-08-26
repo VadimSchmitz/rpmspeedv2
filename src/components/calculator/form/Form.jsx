@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import FormInput from "./FormInput";
 import Button from "../../../utils/Button";
 import DisabledButton from "../../../utils/disabledButton";
-import buildRpmMatrix from "../calculations/buildRpmMatrix";
+import ResultLineChart from "./ResultLineChart";
 
 export default function Form() {
   const [values, setValues] = useState({
@@ -23,11 +23,11 @@ export default function Form() {
     { gear: 0.823 },
   ]);
 
-  const rpmMatrix = [];
+  const [passData, setPassData] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    buildRpmMatrix(values.maxRpm, rpmMatrix);
+    setPassData(!passData);
   };
 
   const onChange = (e) => {
@@ -67,111 +67,120 @@ export default function Form() {
   }, [values.frontSprocket, values.rearSprocket]);
 
   return (
-    <form className="justify-center" onSubmit={handleSubmit}>
-      <h1 className="text-2xl font-bold mt-3 mb-2">
-        Calculate your bikes top speed
-      </h1>
-      <div className="sm:flex sm:max-w-[400px] sm:space-x-1">
-        <FormInput
-          id={1}
-          name={"primaryGear"}
-          label={"Primary gear"}
-          defaultValue={values.primaryGear}
-          onChange={onChange}
-        />
-        <FormInput
-          id={2}
-          name={"maxRpm"}
-          label={"Max rpm"}
-          defaultValue={values.maxRpm}
-          onChange={onChange}
-        />
-        <FormInput
-          id={3}
-          name={"rearWheelSize"}
-          label={"Rear tyre (cm)"}
-          defaultValue={values.rearWheelSize}
-          onChange={onChange}
-        />
-      </div>
-      {/* {values.finalGearRatio} */}
-      <div className="flex space-x-1 max-w-4xl mr-1">
-        <div className="max-h-8 mt-[19px]">
-          {gearFormFields.length - 1 && gearFormFields.length > 1 ? (
-            <Button
-              borderColor={"border-red-700"}
-              buttonInnerText={"-"}
-              hoverColor={"hover:bg-red-500"}
-              textColor={"text-red-600"}
-              onClickHandler={() => removeFields(-1)}
-            />
-          ) : (
-            <DisabledButton
-              borderColor={"border-red-500"}
-              buttonInnerText={"-"}
-              textColor={"text-red-700"}
-            />
-          )}
+    <div>
+      <form className="justify-center" onSubmit={handleSubmit}>
+        <h1 className="text-2xl font-bold mt-3 mb-2">
+          Calculate your bikes top speed
+        </h1>
+        <div className="sm:flex sm:max-w-[400px] sm:space-x-1">
+          <FormInput
+            id={1}
+            name={"primaryGear"}
+            label={"Primary gear"}
+            defaultValue={values.primaryGear}
+            onChange={onChange}
+          />
+          <FormInput
+            id={2}
+            name={"maxRpm"}
+            label={"Max rpm"}
+            defaultValue={values.maxRpm}
+            onChange={onChange}
+          />
+          <FormInput
+            id={3}
+            name={"rearWheelSize"}
+            label={"Rear tyre (cm)"}
+            defaultValue={values.rearWheelSize}
+            onChange={onChange}
+          />
         </div>
-        {gearFormFields.map((form, index) => {
-          return (
-            <div key={index}>
-              <p className="text-sm pl-[2px]">Gear {index + 1}</p>
-              <div className="flex">
-                <FormInput
-                  name={"gear"}
-                  defaultValue={form.gear}
-                  onChange={(event) => handleGearFormChange(index, event)}
-                />
+        {/* {values.finalGearRatio} */}
+        <div className="flex space-x-1 max-w-4xl mr-1">
+          <div className="max-h-8 mt-[19px]">
+            {gearFormFields.length - 1 && gearFormFields.length > 1 ? (
+              <Button
+                borderColor={"border-red-700"}
+                buttonInnerText={"-"}
+                hoverColor={"hover:bg-red-500"}
+                textColor={"text-red-600"}
+                onClickHandler={() => removeFields(-1)}
+              />
+            ) : (
+              <DisabledButton
+                borderColor={"border-red-500"}
+                buttonInnerText={"-"}
+                textColor={"text-red-700"}
+              />
+            )}
+          </div>
+          {gearFormFields.map((form, index) => {
+            return (
+              <div key={index}>
+                <p className="text-sm pl-[2px]">Gear {index + 1}</p>
+                <div className="flex">
+                  <FormInput
+                    name={"gear"}
+                    defaultValue={form.gear}
+                    onChange={(event) => handleGearFormChange(index, event)}
+                  />
+                </div>
               </div>
-              {console.log(form)}
-            </div>
-          );
-        })}
-        <div className="max-h-8 mt-[19px]">
-          {gearFormFields.length < 6 ? (
-            <Button
-              borderColor={"border-blue-500"}
-              buttonInnerText={"+"}
-              hoverColor={"hover:bg-blue-500"}
-              textColor={"text-blue-700"}
-              onClickHandler={() => addFields()}
-            />
-          ) : (
-            <DisabledButton
-              borderColor={"border-blue-500"}
-              buttonInnerText={"+"}
-              textColor={"text-blue-700"}
-            />
-          )}
+            );
+          })}
+          <div className="max-h-8 mt-[19px]">
+            {gearFormFields.length < 6 ? (
+              <Button
+                borderColor={"border-blue-500"}
+                buttonInnerText={"+"}
+                hoverColor={"hover:bg-blue-500"}
+                textColor={"text-blue-700"}
+                onClickHandler={() => addFields()}
+              />
+            ) : (
+              <DisabledButton
+                borderColor={"border-blue-500"}
+                buttonInnerText={"+"}
+                textColor={"text-blue-700"}
+              />
+            )}
+          </div>
         </div>
-      </div>
-      <div className="flex max-w-[250px] space-x-1">
-        <FormInput
-          id={4}
-          name={"frontSprocket"}
-          label={"Front sprocket"}
-          defaultValue={values.frontSprocket}
-          onChange={onChange}
-        />
-        <FormInput
-          id={5}
-          name={"rearSprocket"}
-          label={"Rear sprocket"}
-          defaultValue={values.rearSprocket}
-          onChange={onChange}
-        />
-      </div>
-      <div className="mb-6 pl-[2px]">
-        Final Gear Ratio: {values.finalGearRatio}
-      </div>
+        <div className="flex max-w-[250px] space-x-1">
+          <FormInput
+            id={4}
+            name={"frontSprocket"}
+            label={"Front sprocket"}
+            defaultValue={values.frontSprocket}
+            onChange={onChange}
+          />
+          <FormInput
+            id={5}
+            name={"rearSprocket"}
+            label={"Rear sprocket"}
+            defaultValue={values.rearSprocket}
+            onChange={onChange}
+          />
+        </div>
+        <div className="mb-6 pl-[2px]">
+          Final Gear Ratio: {values.finalGearRatio}
+        </div>
 
-      <Button
-        borderColor={"border-blue-500"}
-        buttonInnerText={"Submit"}
-        hoverColor={"hover:bg-blue-500"}
-        textColor={"text-blue-700"}
+        <Button
+          borderColor={"border-blue-500"}
+          buttonInnerText={"Submit"}
+          hoverColor={"hover:bg-blue-500"}
+          textColor={"text-blue-700"}
+        />
+      </form>
+      <ResultLineChart
+        passData={passData}
+        maxRpm={values.maxRpm}
+        rearWheelSize={values.rearWheelSize}
+        finalGearRatio={values.finalGearRatio}
+        primaryGear={values.primaryGear}
+        gearFormFields={values.gearFormFields}
       />
-    </form>
+    </div>
   );
 }
