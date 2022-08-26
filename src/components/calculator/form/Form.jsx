@@ -4,16 +4,12 @@ import Button from "../../utils/Button";
 import DynamicFinalGearCalculation from "./formsubcomponents/DynamicFinalGearCalculation";
 import DynamicGearForm from "./formsubcomponents/DynamicGearForm";
 
-export default function Form({ values, setValues }) {
-  const [gearFormFields, setGearFormFields] = useState([
-    { gear: 3.166 },
-    { gear: 1.941 },
-    { gear: 1.38 },
-    { gear: 1.083 },
-    { gear: 0.923 },
-    { gear: 0.823 },
-  ]);
-
+export default function Form({
+  values,
+  setValues,
+  gearFormFields,
+  setGearFormFields,
+}) {
   const [frontSprocket, setFrontSprocket] = useState(values.frontSprocket);
   const [rearSprocket, setRearSprocket] = useState(values.rearSprocket);
   const [finalGearRatio, setfinalGearRatio] = useState(values.finalGearRatio);
@@ -27,7 +23,6 @@ export default function Form({ values, setValues }) {
       frontSprocket,
       rearSprocket,
       finalGearRatio,
-      gearFormFields,
     };
     setValues(tempValues);
   };

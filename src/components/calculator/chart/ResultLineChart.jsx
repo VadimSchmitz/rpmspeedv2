@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import buildRpmMatrix from "./calculations/buildRpmMatrix";
 import calculateSpeed from "./calculations/calculateSpeed";
+import formatData from "./calculations/formatData";
 
 import {
   LineChart,
@@ -12,13 +13,28 @@ import {
   Legend,
 } from "recharts";
 
-export default function App({ values }) {
+export default function App({ values, gearFormFields }) {
   let rpmMatrix;
-  let speedMatrix;
 
-  useEffect(() => {
-    console.log("submitted toogle");
-  }, []);
+  const memoizedRpmMatrix = useMemo(() =>
+    buildRpmMatrix(values.maxRpm, rpmMatrix)
+  );
+
+  const memoizedSpeedMatrix = useMemo(() =>
+    calculateSpeed(
+      values.rearWheelSize,
+      values.finalGearRatio,
+      values.primaryGear,
+      gearFormFields,
+      memoizedRpmMatrix
+    )
+  );
+
+  const memoizedFormattedDataMatrix = useMemo(() =>
+    formatData(memoizedSpeedMatrix, memoizedRpmMatrix)
+  );
+
+  console.log(memoizedFormattedDataMatrix);
 
   const data = [
     {
@@ -41,9 +57,9 @@ export default function App({ values }) {
   return (
     <LineChart
       layout="horizontal"
-      width={500}
+      width={900}
       height={600}
-      data={data}
+      data={memoizedFormattedDataMatrix}
       margin={{
         top: 20,
         right: 30,
@@ -54,10 +70,19 @@ export default function App({ values }) {
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="rpm" type="category" />
       <YAxis type="number" />
-      <Tooltip />
-      <Legend />
-      <Line dataKey="speed" stroke="#8884d8" />
-      <Line dataKey="speed1" stroke="#82ca9d" />
+      <Tooltip reversed />
+      <Legend reversed />
+      {memoizedSpeedMatrix.map((element, index) => {
+        let i = memoizedSpeedMatrix.length;
+        return (
+          <Line
+            key=""
+            type="monotone"
+            dataKey={`gear${i - index}`}
+            stroke="#000000"
+          />
+        );
+      })}
     </LineChart>
   );
 }
