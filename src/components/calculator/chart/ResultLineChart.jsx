@@ -12,20 +12,13 @@ import {
   Legend,
 } from "recharts";
 
-export default function App() {
+export default function App({ values }) {
   let rpmMatrix;
   let speedMatrix;
 
-  // useEffect(() => {
-  //   // rpmMatrix = buildRpmMatrix(maxRpm, rpmMatrix);
-  //   // speedMatrix = calculateSpeed(
-  //   //   rearWheelSize,
-  //   //   finalGearRatio,
-  //   //   primaryGear,
-  //   //   gearFormFields,
-  //   //   rpmMatrix
-  //   // );
-  // }, []);
+  useEffect(() => {
+    console.log("submitted toogle");
+  }, []);
 
   const data = [
     {

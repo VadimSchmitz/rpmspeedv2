@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import FormInput from "./FormInput";
+import FormInput from "../../../utils/FormInput";
 
 export default function DynamicFinalGearCalculation({
   frontSprocket,

@@ -1,47 +1,39 @@
-import React, { useState, useEffect } from "react";
-import FormInput from "./formsubcomponents/FormInput";
-import Button from "./formsubcomponents/Button";
-import DisabledButton from "./formsubcomponents/disabledButton";
+import React, { useState } from "react";
+import FormInput from "../../utils/FormInput";
+import Button from "../../utils/Button";
 import DynamicFinalGearCalculation from "./formsubcomponents/DynamicFinalGearCalculation";
+import DynamicGearForm from "./formsubcomponents/DynamicGearForm";
 
-export default function Form({
-  values,
-  setValues,
-  gearFormFields,
-  setGearFormFields,
-}) {
-  let tempValues = values;
+export default function Form({ values, setValues }) {
+  const [gearFormFields, setGearFormFields] = useState([
+    { gear: 3.166 },
+    { gear: 1.941 },
+    { gear: 1.38 },
+    { gear: 1.083 },
+    { gear: 0.923 },
+    { gear: 0.823 },
+  ]);
+
   const [frontSprocket, setFrontSprocket] = useState(values.frontSprocket);
   const [rearSprocket, setRearSprocket] = useState(values.rearSprocket);
   const [finalGearRatio, setfinalGearRatio] = useState(values.finalGearRatio);
 
+  let tempValues = values;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    tempValues = { ...tempValues, frontSprocket, rearSprocket, finalGearRatio };
+    tempValues = {
+      ...tempValues,
+      frontSprocket,
+      rearSprocket,
+      finalGearRatio,
+      gearFormFields,
+    };
     setValues(tempValues);
   };
 
   const onChange = (e) => {
     tempValues = { ...tempValues, [e.target.name]: e.target.value };
-  };
-
-  const handleGearFormChange = (index, event) => {
-    const data = [...gearFormFields];
-    data[index][event.target.name] = event.target.value;
-    setGearFormFields(data);
-  };
-
-  const addFields = () => {
-    const object = {
-      gear: 0,
-    };
-    setGearFormFields([...gearFormFields, object]);
-  };
-
-  const removeFields = (index) => {
-    const data = [...gearFormFields];
-    data.splice(index, 1);
-    setGearFormFields(data);
   };
 
   return (
@@ -73,56 +65,10 @@ export default function Form({
             onChange={onChange}
           />
         </div>
-        <div className="flex space-x-1 max-w-4xl mr-1">
-          <div className="max-h-8 mt-[19px]">
-            {gearFormFields.length - 1 && gearFormFields.length > 1 ? (
-              <Button
-                borderColor={"border-red-700"}
-                buttonInnerText={"-"}
-                hoverColor={"hover:bg-red-500"}
-                textColor={"text-red-600"}
-                onClickHandler={() => removeFields(-1)}
-              />
-            ) : (
-              <DisabledButton
-                borderColor={"border-red-500"}
-                buttonInnerText={"-"}
-                textColor={"text-red-700"}
-              />
-            )}
-          </div>
-          {gearFormFields.map((form, index) => {
-            return (
-              <div key={index}>
-                <p className="text-sm pl-[2px]">Gear {index + 1}</p>
-                <div className="flex">
-                  <FormInput
-                    name={"gear"}
-                    defaultValue={form.gear}
-                    onChange={(event) => handleGearFormChange(index, event)}
-                  />
-                </div>
-              </div>
-            );
-          })}
-          <div className="max-h-8 mt-[19px]">
-            {gearFormFields.length < 6 ? (
-              <Button
-                borderColor={"border-blue-500"}
-                buttonInnerText={"+"}
-                hoverColor={"hover:bg-blue-500"}
-                textColor={"text-blue-700"}
-                onClickHandler={() => addFields()}
-              />
-            ) : (
-              <DisabledButton
-                borderColor={"border-blue-500"}
-                buttonInnerText={"+"}
-                textColor={"text-blue-700"}
-              />
-            )}
-          </div>
-        </div>
+        <DynamicGearForm
+          gearFormFields={gearFormFields}
+          setGearFormFields={setGearFormFields}
+        />
 
         <DynamicFinalGearCalculation
           frontSprocket={frontSprocket}
