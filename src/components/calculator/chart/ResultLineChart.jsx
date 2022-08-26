@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import buildRpmMatrix from "../calculations/buildRpmMatrix";
-import calculateSpeed from "../calculations/calculateSpeed";
+import buildRpmMatrix from "./calculations/buildRpmMatrix";
+import calculateSpeed from "./calculations/calculateSpeed";
 
 import {
   LineChart,
@@ -12,28 +12,20 @@ import {
   Legend,
 } from "recharts";
 
-export default function App({
-  maxRpm,
-  passData,
-  rearWheelSize,
-  finalGearRatio,
-  primaryGear,
-  gearFormFields,
-}) {
+export default function App() {
   let rpmMatrix;
   let speedMatrix;
 
-  useEffect(() => {
-    rpmMatrix = buildRpmMatrix(maxRpm, rpmMatrix);
-    // speedMatrix = calculateSpeed(
-    //   rearWheelSize,
-    //   finalGearRatio,
-    //   primaryGear,
-    //   gearFormFields,
-    //   rpmMatrix
-    // );
-    console.log(rpmMatrix);
-  }, [passData]);
+  // useEffect(() => {
+  //   // rpmMatrix = buildRpmMatrix(maxRpm, rpmMatrix);
+  //   // speedMatrix = calculateSpeed(
+  //   //   rearWheelSize,
+  //   //   finalGearRatio,
+  //   //   primaryGear,
+  //   //   gearFormFields,
+  //   //   rpmMatrix
+  //   // );
+  // }, []);
 
   const data = [
     {

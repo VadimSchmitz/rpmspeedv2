@@ -1,37 +1,28 @@
 import React, { useState, useEffect } from "react";
-import FormInput from "./FormInput";
-import Button from "../../../utils/Button";
-import DisabledButton from "../../../utils/disabledButton";
-import ResultLineChart from "./ResultLineChart";
+import FormInput from "./formsubcomponents/FormInput";
+import Button from "./formsubcomponents/Button";
+import DisabledButton from "./formsubcomponents/disabledButton";
+import DynamicFinalGearCalculation from "./formsubcomponents/DynamicFinalGearCalculation";
 
-export default function Form() {
-  const [values, setValues] = useState({
-    primaryGear: "3.842",
-    frontSprocket: "14",
-    rearSprocket: "53",
-    finalGearRatio: "",
-    maxRpm: "9400",
-    rearWheelSize: "64",
-  });
-
-  const [gearFormFields, setGearFormFields] = useState([
-    { gear: 3.166 },
-    { gear: 1.941 },
-    { gear: 1.38 },
-    { gear: 1.083 },
-    { gear: 0.923 },
-    { gear: 0.823 },
-  ]);
-
-  const [passData, setPassData] = useState(false);
+export default function Form({
+  values,
+  setValues,
+  gearFormFields,
+  setGearFormFields,
+}) {
+  let tempValues = values;
+  const [frontSprocket, setFrontSprocket] = useState(values.frontSprocket);
+  const [rearSprocket, setRearSprocket] = useState(values.rearSprocket);
+  const [finalGearRatio, setfinalGearRatio] = useState(values.finalGearRatio);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setPassData(!passData);
+    tempValues = { ...tempValues, frontSprocket, rearSprocket, finalGearRatio };
+    setValues(tempValues);
   };
 
   const onChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    tempValues = { ...tempValues, [e.target.name]: e.target.value };
   };
 
   const handleGearFormChange = (index, event) => {
@@ -52,19 +43,6 @@ export default function Form() {
     data.splice(index, 1);
     setGearFormFields(data);
   };
-
-  useEffect(() => {
-    if (values.frontSprocket && values.rearSprocket) {
-      setValues({
-        ...values,
-        ["finalGearRatio"]: parseFloat(
-          values.rearSprocket / values.frontSprocket
-        ).toFixed(2),
-      });
-    } else {
-      setValues({ ...values, [values.finalGearRatio]: "" });
-    }
-  }, [values.frontSprocket, values.rearSprocket]);
 
   return (
     <div>
@@ -95,7 +73,6 @@ export default function Form() {
             onChange={onChange}
           />
         </div>
-        {/* {values.finalGearRatio} */}
         <div className="flex space-x-1 max-w-4xl mr-1">
           <div className="max-h-8 mt-[19px]">
             {gearFormFields.length - 1 && gearFormFields.length > 1 ? (
@@ -146,25 +123,15 @@ export default function Form() {
             )}
           </div>
         </div>
-        <div className="flex max-w-[250px] space-x-1">
-          <FormInput
-            id={4}
-            name={"frontSprocket"}
-            label={"Front sprocket"}
-            defaultValue={values.frontSprocket}
-            onChange={onChange}
-          />
-          <FormInput
-            id={5}
-            name={"rearSprocket"}
-            label={"Rear sprocket"}
-            defaultValue={values.rearSprocket}
-            onChange={onChange}
-          />
-        </div>
-        <div className="mb-6 pl-[2px]">
-          Final Gear Ratio: {values.finalGearRatio}
-        </div>
+
+        <DynamicFinalGearCalculation
+          frontSprocket={frontSprocket}
+          rearSprocket={rearSprocket}
+          finalGearRatio={finalGearRatio}
+          setFrontSprocket={setFrontSprocket}
+          setRearSprocket={setRearSprocket}
+          setfinalGearRatio={setfinalGearRatio}
+        />
 
         <Button
           borderColor={"border-blue-500"}
@@ -173,14 +140,6 @@ export default function Form() {
           textColor={"text-blue-700"}
         />
       </form>
-      <ResultLineChart
-        passData={passData}
-        maxRpm={values.maxRpm}
-        rearWheelSize={values.rearWheelSize}
-        finalGearRatio={values.finalGearRatio}
-        primaryGear={values.primaryGear}
-        gearFormFields={values.gearFormFields}
-      />
     </div>
   );
 }
