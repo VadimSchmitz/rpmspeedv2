@@ -7,7 +7,7 @@ export default function Calculator() {
     primaryGear: "3.842",
     frontSprocket: "14",
     rearSprocket: "53",
-    finalGearRatio: "3.785",
+    finalGearRatio: "3.786",
     maxRpm: "9400",
     rearWheelSize: "64",
   });

@@ -1,6 +1,4 @@
-import React, { useState } from "react";
 import FormInput from "../../utils/FormInput";
-import Button from "../../utils/Button";
 import DynamicFinalGearCalculation from "./formsubcomponents/DynamicFinalGearCalculation";
 import DynamicGearForm from "./formsubcomponents/DynamicGearForm";
 
@@ -10,25 +8,14 @@ export default function Form({
   gearFormFields,
   setGearFormFields,
 }) {
-  const [frontSprocket, setFrontSprocket] = useState(values.frontSprocket);
-  const [rearSprocket, setRearSprocket] = useState(values.rearSprocket);
-  const [finalGearRatio, setfinalGearRatio] = useState(values.finalGearRatio);
-
-  let tempValues = values;
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    tempValues = {
-      ...tempValues,
-      frontSprocket,
-      rearSprocket,
-      finalGearRatio,
-    };
-    setValues(tempValues);
   };
 
   const onChange = (e) => {
-    tempValues = { ...tempValues, [e.target.name]: e.target.value };
+    e.preventDefault();
+
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   return (
@@ -64,22 +51,7 @@ export default function Form({
           gearFormFields={gearFormFields}
           setGearFormFields={setGearFormFields}
         />
-
-        <DynamicFinalGearCalculation
-          frontSprocket={frontSprocket}
-          rearSprocket={rearSprocket}
-          finalGearRatio={finalGearRatio}
-          setFrontSprocket={setFrontSprocket}
-          setRearSprocket={setRearSprocket}
-          setfinalGearRatio={setfinalGearRatio}
-        />
-
-        <Button
-          borderColor={"border-blue-500"}
-          buttonInnerText={"Submit"}
-          hoverColor={"hover:bg-blue-500"}
-          textColor={"text-blue-700"}
-        />
+        <DynamicFinalGearCalculation values={values} setValues={setValues} />
       </form>
     </div>
   );

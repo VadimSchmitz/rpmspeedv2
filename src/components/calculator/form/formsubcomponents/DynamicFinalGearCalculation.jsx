@@ -1,27 +1,29 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import FormInput from "../../../utils/FormInput";
 
-export default function DynamicFinalGearCalculation({
-  frontSprocket,
-  rearSprocket,
-  finalGearRatio,
-  setFrontSprocket,
-  setRearSprocket,
-  setfinalGearRatio,
-}) {
+export default function DynamicFinalGearCalculation({ values, setValues }) {
+  const [frontSprocket, setFrontSprocket] = useState(values.frontSprocket);
+  const [rearSprocket, setRearSprocket] = useState(values.rearSprocket);
+  const [finalGearRatio, setFinalGearRatio] = useState(values.finalGearRatio);
+
   useEffect(() => {
-    if (frontSprocket && rearSprocket) {
-      setfinalGearRatio(parseFloat(rearSprocket / frontSprocket).toFixed(2));
+    if (values.frontSprocket && values.rearSprocket) {
+      setValues({
+        ...values,
+        ["frontSprocket"]: frontSprocket,
+        ["rearSprocket"]: rearSprocket,
+        ["finalGearRatio"]: parseFloat(rearSprocket / frontSprocket).toFixed(2),
+      });
     } else {
-      setfinalGearRatio("");
+      setFinalGearRatio("");
     }
   }, [frontSprocket, rearSprocket]);
 
-  const HandleFrontSprocketChange = (e) => {
+  const handleFrontSprocketChange = (e) => {
     setFrontSprocket(e.target.value);
   };
 
-  const HandleRearSprocketChange = (e) => {
+  const handleRearSprocketChange = (e) => {
     setRearSprocket(e.target.value);
   };
 
@@ -32,18 +34,20 @@ export default function DynamicFinalGearCalculation({
           id={4}
           name={"frontSprocket"}
           label={"Front sprocket"}
-          defaultValue={frontSprocket}
-          onChange={HandleFrontSprocketChange}
+          defaultValue={values.frontSprocket}
+          onChange={handleFrontSprocketChange}
         />
         <FormInput
           id={5}
           name={"rearSprocket"}
           label={"Rear sprocket"}
-          defaultValue={rearSprocket}
-          onChange={HandleRearSprocketChange}
+          defaultValue={values.rearSprocket}
+          onChange={handleRearSprocketChange}
         />
       </div>
-      <div className="mb-6 pl-[2px]">Final Gear Ratio: {finalGearRatio}</div>
+      <div className="mb-6 pl-[2px]">
+        Final Gear Ratio: {values.finalGearRatio}
+      </div>
     </div>
   );
 }

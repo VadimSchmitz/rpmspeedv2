@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useMemo } from "react";
 import buildRpmMatrix from "./calculations/buildRpmMatrix";
 import calculateSpeed from "./calculations/calculateSpeed";
 import formatData from "./calculations/formatData";
@@ -33,8 +33,6 @@ export default function App({ values, gearFormFields }) {
   const memoizedFormattedDataMatrix = useMemo(() =>
     formatData(memoizedSpeedMatrix, memoizedRpmMatrix)
   );
-
-  console.log(memoizedFormattedDataMatrix);
 
   const data = [
     {

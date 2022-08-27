@@ -12,7 +12,7 @@ export default function DynamicGearForm({ gearFormFields, setGearFormFields }) {
 
   const addField = () => {
     const object = {
-      gear: 0,
+      gear: (gearFormFields.reverse()[0].gear - 0.1).toFixed(3),
     };
     setGearFormFields([...gearFormFields, object]);
   };
@@ -21,6 +21,7 @@ export default function DynamicGearForm({ gearFormFields, setGearFormFields }) {
     const data = [...gearFormFields];
     data.splice(index, 1);
     setGearFormFields(data);
+    console.log(gearFormFields);
   };
 
   return (
