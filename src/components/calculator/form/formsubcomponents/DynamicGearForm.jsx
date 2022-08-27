@@ -25,8 +25,8 @@ export default function DynamicGearForm({ gearFormFields, setGearFormFields }) {
   };
 
   return (
-    <div className="flex space-x-1 max-w-4xl mr-1">
-      <div className="max-h-8 mt-[19px]">
+    <div className="flex space-x-1 max-w-4xl sm:ml-[0] ml-[-4px]">
+      <div className="max-h-8 sm:mt-[19px] sm:mr-[0] mt-[14px] mr-[-5px]">
         {gearFormFields.length - 1 && gearFormFields.length > 1 ? (
           <Button
             borderColor={"border-red-700"}
@@ -46,7 +46,7 @@ export default function DynamicGearForm({ gearFormFields, setGearFormFields }) {
       {gearFormFields.map((form, index) => {
         return (
           <div key={index}>
-            <p className="text-sm pl-[2px]">Gear {index + 1}</p>
+            <p className="sm:text-sm text-xs pl-[2px]">Gear {index + 1}</p>
             <div className="flex">
               <FormInput
                 name={"gear"}
@@ -57,7 +57,7 @@ export default function DynamicGearForm({ gearFormFields, setGearFormFields }) {
           </div>
         );
       })}
-      <div className="max-h-8 mt-[19px]">
+      <div className="max-h-8 sm:mt-[19px] mt-[14px]">
         {gearFormFields.length < 6 ? (
           <Button
             borderColor={"border-blue-500"}

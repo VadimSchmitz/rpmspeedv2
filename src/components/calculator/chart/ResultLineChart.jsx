@@ -38,7 +38,7 @@ export default function App({ values, gearFormFields }) {
 
   const { width } = useWindowDimensions();
   let chartHeight;
-  width < 640 ? (chartHeight = "50%") : (chartHeight = "65%");
+  width < 640 ? (chartHeight = "61%") : (chartHeight = "70%");
 
   return (
     <ResponsiveContainer width="100%" height={chartHeight}>

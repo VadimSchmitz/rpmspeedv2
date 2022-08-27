@@ -7,4 +7,4 @@ choice between rear tyre size in cm or input of a real world tyre
 
 calculate Primary gear and individual gears on the spot based on 2 gears 53/12 -> 4.417
 
-reverse gear legend
+

@@ -24,7 +24,7 @@ export default function Form({
         <h1 className="text-2xl font-bold mt-3 mb-2">
           Calculate your bikes top speed
         </h1>
-        <div className="sm:flex sm:max-w-[400px] sm:space-x-1">
+        <div className="flex max-w-[97.5%] sm:max-w-[400px] space-x-1">
           <FormInput
             id={1}
             name={"primaryGear"}
