@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Form from "./form/Form";
 import ResultLineChart from "./chart/ResultLineChart";
 
@@ -22,8 +22,8 @@ export default function Calculator() {
   ]);
 
   return (
-    <div className="flex lg:justify-center">
-      <div className="w-full sm:w-1/2 justify-center">
+    <div className="flex sm:justify-center w-full">
+      <div className="w-full md:w-1/2">
         <Form
           values={values}
           setValues={setValues}

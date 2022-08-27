@@ -44,28 +44,25 @@ export default function App({ values, gearFormFields }) {
     <ResponsiveContainer width="100%" height={chartHeight}>
       <LineChart
         layout="horizontal"
-        width={900}
-        height={600}
         data={memoizedFormattedDataMatrix}
         margin={{
-          top: 20,
-          right: 30,
-          left: -10,
+          top: 5,
+          right: 45,
+          left: -15,
           bottom: 5,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="rpm" type="category" />
         <YAxis type="number" />
-        <Tooltip reversed position={{ x: 80, y: 40 }} />
+        <Tooltip position={{ x: 80, y: 40 }} />
         <Legend />
         {memoizedSpeedMatrix.map((element, index) => {
-          let i = memoizedSpeedMatrix.length;
           return (
             <Line
               key=""
               type="monotone"
-              dataKey={`gear${i - index}`}
+              dataKey={`gear${index + 1}`}
               stroke="#000000"
             />
           );
