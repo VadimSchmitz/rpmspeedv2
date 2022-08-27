@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import buildRpmMatrix from "./calculations/buildRpmMatrix";
 import calculateSpeed from "./calculations/calculateSpeed";
 import formatData from "./calculations/formatData";
+import useWindowDimensions from "./hooks/useWindowDimensions";
 
 import {
   LineChart,
@@ -11,6 +12,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
+  ResponsiveContainer,
 } from "recharts";
 
 export default function App({ values, gearFormFields }) {
@@ -34,53 +36,41 @@ export default function App({ values, gearFormFields }) {
     formatData(memoizedSpeedMatrix, memoizedRpmMatrix)
   );
 
-  const data = [
-    {
-      rpm: 0,
-      speed: 0,
-      speed1: 0,
-    },
-    {
-      rpm: 100,
-      speed: 10,
-      speed1: 20,
-    },
-    {
-      rpm: 200,
-      speed: 20,
-      speed1: 30,
-    },
-  ];
+  const { width } = useWindowDimensions();
+  let chartHeight;
+  width < 640 ? (chartHeight = "50%") : (chartHeight = "65%");
 
   return (
-    <LineChart
-      layout="horizontal"
-      width={900}
-      height={600}
-      data={memoizedFormattedDataMatrix}
-      margin={{
-        top: 20,
-        right: 30,
-        left: 20,
-        bottom: 5,
-      }}
-    >
-      <CartesianGrid strokeDasharray="3 3" />
-      <XAxis dataKey="rpm" type="category" />
-      <YAxis type="number" />
-      <Tooltip reversed />
-      <Legend reversed />
-      {memoizedSpeedMatrix.map((element, index) => {
-        let i = memoizedSpeedMatrix.length;
-        return (
-          <Line
-            key=""
-            type="monotone"
-            dataKey={`gear${i - index}`}
-            stroke="#000000"
-          />
-        );
-      })}
-    </LineChart>
+    <ResponsiveContainer width="100%" height={chartHeight}>
+      <LineChart
+        layout="horizontal"
+        width={900}
+        height={600}
+        data={memoizedFormattedDataMatrix}
+        margin={{
+          top: 20,
+          right: 30,
+          left: -10,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="rpm" type="category" />
+        <YAxis type="number" />
+        <Tooltip reversed position={{ x: 80, y: 40 }} />
+        <Legend />
+        {memoizedSpeedMatrix.map((element, index) => {
+          let i = memoizedSpeedMatrix.length;
+          return (
+            <Line
+              key=""
+              type="monotone"
+              dataKey={`gear${i - index}`}
+              stroke="#000000"
+            />
+          );
+        })}
+      </LineChart>
+    </ResponsiveContainer>
   );
 }
