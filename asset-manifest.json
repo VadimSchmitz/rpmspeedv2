@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/rpmspeedv2/static/css/main.c800eb47.css",
+    "main.js": "/rpmspeedv2/static/js/main.c0db72d7.js",
+    "index.html": "/rpmspeedv2/index.html",
+    "main.c800eb47.css.map": "/rpmspeedv2/static/css/main.c800eb47.css.map",
+    "main.c0db72d7.js.map": "/rpmspeedv2/static/js/main.c0db72d7.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c800eb47.css",
+    "static/js/main.c0db72d7.js"
+  ]
+}
